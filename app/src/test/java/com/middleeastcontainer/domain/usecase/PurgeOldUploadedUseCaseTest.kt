@@ -22,6 +22,7 @@ class PurgeOldUploadedUseCaseTest {
     private class RecordingRepo : ContainerRepository {
         var purgedCutoff: String? = null
         override fun observeAll(): Flow<List<Container>> = emptyFlow()
+        override fun search(query: String): Flow<List<Container>> = emptyFlow()
         override suspend fun get(name: String): Container? = null
         override suspend fun create(name: String, type: String) {}
         override suspend fun updateType(name: String, type: String) {}

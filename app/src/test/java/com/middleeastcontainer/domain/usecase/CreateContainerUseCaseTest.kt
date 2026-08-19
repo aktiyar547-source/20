@@ -14,6 +14,7 @@ class CreateContainerUseCaseTest {
     private class FakeRepo(private val existing: Set<String> = emptySet()) : ContainerRepository {
         var createdName: String? = null
         override fun observeAll(): Flow<List<Container>> = emptyFlow()
+        override fun search(query: String): Flow<List<Container>> = emptyFlow()
         override suspend fun get(name: String): Container? =
             if (name in existing) Container(name, "Standard 20", "", "Upload", null, null, "Upload", "") else null
         override suspend fun create(name: String, type: String) { createdName = name }

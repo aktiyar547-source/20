@@ -44,6 +44,22 @@ fi
 # classes. The plugin needs its runtime, which is not obtainable here, so this
 # one call cannot be resolved. Listed explicitly rather than filtered loosely,
 # so nothing else can hide behind it.
+# Unit tests are compiled by the same CI job that builds the APK, so a fake that
+# no longer implements its interface fails the whole run — after the APK has
+# already been produced. That reached CI once because every checker scanned main
+# sources only.
+if [ -d app/src/test ]; then
+  echo "Type-checking test sources..."
+  "$KOTLINC" tools/stubs/test/*.kt -cp "$COROUTINES" -nowarn -d "$OUT/junit" 2>/dev/null
+  # Every test source except the one needing MockWebServer, which is a whole
+  # HTTP server and not worth stubbing. Named explicitly rather than filtered by
+  # message, so nothing else can hide behind the exemption.
+  TEST_SOURCES=$(find app/src/test -name '*.kt' ! -name 'MecrcApiWireCompatibilityTest.kt')
+  "$KOTLINC" $TEST_SOURCES app/src/main/java/com/middleeastcontainer \
+    -cp "$OUT/android:$OUT/compose:$OUT/generated:$OUT/junit:$COROUTINES" \
+    -nowarn -d "$OUT/testclasses" 2>>"$OUT/errors.txt" || true
+fi
+
 KNOWN_GENERATED="unresolved reference 'serializer'"
 
 REAL=$(grep "error:" "$OUT/errors.txt" | grep -v "$KNOWN_GENERATED" || true)

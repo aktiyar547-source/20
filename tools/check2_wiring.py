@@ -16,6 +16,7 @@ def _find_app_dir():
 APP = _find_app_dir()
 PROJECT = os.path.dirname(APP)
 ROOT = os.path.join(APP, "src", "main")
+TEST_ROOT = os.path.join(APP, "src", "test")
 
 
 
