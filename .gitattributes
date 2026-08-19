@@ -1,2 +1,29 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Normalise line endings so a Windows checkout cannot change file contents.
+#
+# Without this, Git converts LF to CRLF on checkout for anyone with
+# core.autocrlf=true, which is the Windows default. Source files tolerate it,
+# but shell scripts do not: a gradlew with CRLF fails on a Linux CI runner with
+# "bad interpreter: /bin/sh^M", and the cause is invisible in the diff.
+
+# Everything Git considers text is stored and checked out with LF.
+* text=auto eol=lf
+
+# Scripts that must keep LF even on Windows — they run on Linux.
+*.sh        text eol=lf
+gradlew     text eol=lf
+
+# Windows batch files genuinely need CRLF.
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+gradlew.bat text eol=crlf
+
+# Binary: never convert, never diff.
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.webp      binary
+*.jar       binary
+*.zip       binary
+*.apk       binary
+*.keystore  binary
+*.jks       binary

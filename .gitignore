@@ -1,0 +1,21 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+/app/build/
+/app/release/
+*.keystore
+!debug.keystore
+
+# Signing secrets — never commit
+keystore.properties
+*.jks
+
+# Python bytecode from the verification tools
+__pycache__/
+*.pyc

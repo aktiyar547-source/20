@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- App-scoped external files, used when all-files access has not been granted. -->
+    <external-files-path name="ocr_images" path="OCR2/" />
+    <external-files-path name="captures" path="captures/" />
+
+    <!--
+      The visible /OCR2 folder. Needed to share an exported sheet: handing another
+      app a raw file path throws FileUriExposedException on Android 7 and above,
+      so every share has to go through a content Uri.
+    -->
+    <external-path name="ocr2" path="OCR2/" />
+</paths>
