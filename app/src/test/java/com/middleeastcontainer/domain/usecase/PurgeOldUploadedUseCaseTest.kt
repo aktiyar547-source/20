@@ -27,7 +27,6 @@ class PurgeOldUploadedUseCaseTest {
         override suspend fun create(name: String, type: String) {}
         override suspend fun updateType(name: String, type: String) {}
         override suspend fun delete(name: String) {}
-        override suspend fun search(query: String): Flow<List<Container>> = emptyFlow()
         override suspend fun purgeUploadedBefore(cutoffDate: String) { purgedCutoff = cutoffDate }
     }
 
